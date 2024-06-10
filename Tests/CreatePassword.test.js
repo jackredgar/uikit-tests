@@ -43,98 +43,67 @@ describe('Create Password', function() {
   })
 
   it('TypeUppercase', async function() {
-    await driver.manage().setTimeouts({ implicit: 2000 });
+    await driver.manage().setTimeouts({ implicit: 5000 });
     await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("E")
-    let conditionValid = false;
-    let criteriaClasses = await driver.findElement(By.xpath('//div[contains(text(), "One uppercase letter")]/i')).getAttribute("class")
-    criteriaClasses = criteriaClasses.split(" ")
-    for (let i = 0; i < criteriaClasses.length; i++) {
-      console.log(criteriaClasses[i])
-      if (criteriaClasses[i] == "password-condition-valid") {
-        conditionValid = true;
-        break;
-      }
-    }
-    assert.equal(true, conditionValid)
+    
+    await driver.findElement(By.xpath('//div[contains(text(), "One uppercase letter")]/i[contains(@class, "password-condition-valid")]'))
   })
 
   it('TypeLowercase', async function() {
-    await driver.manage().setTimeouts({ implicit: 2000 });
+    await driver.manage().setTimeouts({ implicit: 5000 });
     await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("e")
-    let conditionValid = false;
-    let criteriaClasses = await driver.findElement(By.xpath('//div[contains(text(), "One lowercase letter")]/i')).getAttribute("class")
-    criteriaClasses = criteriaClasses.split(" ")
-    for (let i = 0; i < criteriaClasses.length; i++) {
-      console.log(criteriaClasses[i])
-      if (criteriaClasses[i] == "password-condition-valid") {
-        conditionValid = true;
-        break;
-      }
-    }
-    assert.equal(true, conditionValid)
+    
+    await driver.findElement(By.xpath('//div[contains(text(), "One lowercase letter")]/i[contains(@class, "password-condition-valid")]'))
   })
 
   it('TypeNumber', async function() {
-    await driver.manage().setTimeouts({ implicit: 2000 });
+    await driver.manage().setTimeouts({ implicit: 5000 });
     await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("3")
-    let conditionValid = false;
-    let criteriaClasses = await driver.findElement(By.xpath('//div[contains(text(), "One number")]/i')).getAttribute("class")
-    criteriaClasses = criteriaClasses.split(" ")
-    for (let i = 0; i < criteriaClasses.length; i++) {
-      console.log(criteriaClasses[i])
-      if (criteriaClasses[i] == "password-condition-valid") {
-        conditionValid = true;
-        break;
-      }
-    }
-    assert.equal(true, conditionValid)
+    
+    await driver.findElement(By.xpath('//div[contains(text(), "One number")]/i[contains(@class, "password-condition-valid")]'))
   })
 
   it('TypeSymbol', async function() {
-    await driver.manage().setTimeouts({ implicit: 2000 });
+    await driver.manage().setTimeouts({ implicit: 5000 });
     await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("!")
-    let conditionValid = false;
-    let criteriaClasses = await driver.findElement(By.xpath('//div[contains(text(), "One valid symbol (#?!@$%^&*+-)")]/i')).getAttribute("class")
-    criteriaClasses = criteriaClasses.split(" ")
-    for (let i = 0; i < criteriaClasses.length; i++) {
-      console.log(criteriaClasses[i])
-      if (criteriaClasses[i] == "password-condition-valid") {
-        conditionValid = true;
-        break;
-      }
-    }
-    assert.equal(true, conditionValid)
+    
+    await driver.findElement(By.xpath('//div[contains(text(), "One valid symbol (#?!@$%^&*+-)")]/i[contains(@class, "password-condition-valid")]'))
   })
 
   it('TypeMinChars', async function() {
-    await driver.manage().setTimeouts({ implicit: 2000 });
+    await driver.manage().setTimeouts({ implicit: 5000 });
     await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("atleasteight")
-    let conditionValid = false;
-    let criteriaClasses = await driver.findElement(By.xpath('//span[contains(text(), "8-32 characters")]/parent::div/i')).getAttribute("class")
-    criteriaClasses = criteriaClasses.split(" ")
-    for (let i = 0; i < criteriaClasses.length; i++) {
-      console.log(criteriaClasses[i])
-      if (criteriaClasses[i] == "password-condition-valid") {
-        conditionValid = true;
-        break;
-      }
-    }
-    assert.equal(true, conditionValid)
+
+    await driver.findElement(By.xpath('//span[contains(text(), "8-32 characters")]/parent::div/i[contains(@class, "password-condition-valid")]'))
+  })
+
+  it('TypeAll', async function() {
+    await driver.manage().setTimeouts({ implicit: 5000 });
+    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+
+    await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
+    await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("Bank1234#")
+
+    await driver.findElement(By.xpath('//div[contains(text(), "One uppercase letter")]/i[contains(@class, "password-condition-valid")]'))
+    await driver.findElement(By.xpath('//div[contains(text(), "One lowercase letter")]/i[contains(@class, "password-condition-valid")]'))
+    await driver.findElement(By.xpath('//div[contains(text(), "One number")]/i[contains(@class, "password-condition-valid")]'))
+    await driver.findElement(By.xpath('//div[contains(text(), "One valid symbol (#?!@$%^&*+-)")]/i[contains(@class, "password-condition-valid")]'))
+    await driver.findElement(By.xpath('//span[contains(text(), "8-32 characters")]/parent::div/i[contains(@class, "password-condition-valid")]'))
   })
 
 })
