@@ -2,16 +2,21 @@
 const { Builder, By, Key, until, ExpectedConditions } = require('selenium-webdriver')
 const assert = require('assert')
 const { NoSuchElementError } = require('selenium-webdriver/lib/error')
+require('dotenv').config()
 
 describe('Notification Badge', function() {
   this.timeout(30000)
   let driver
   let vars
 
+  let env = process.env.ENVIRONMENT
+  let LSG_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/"
+  let Component_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=79" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=79"
+
   let savedCookies = null;
 
   async function goToLSG(driver, componentURL) {
-    await driver.get("https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/")
+    await driver.get(LSG_URL)
     driver.manage().window().maximize();
     if (savedCookies != null) {
       for (let i = 0; i < savedCookies.length; i++) {
@@ -44,7 +49,7 @@ describe('Notification Badge', function() {
 
   it('ClickBadge', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=79");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css('div[data-block="CustomPatterns.NotificationBadge"] > div > div')).click()
     const badgeStyle = await driver.findElement(By.css('div[data-block="CustomPatterns.NotificationBadge"] > div > div')).getCssValue("outline");
@@ -54,7 +59,7 @@ describe('Notification Badge', function() {
 
   it('HoverBadge', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=79");
+    await goToLSG(driver, Component_URL);
 
     const badgeEl = await driver.findElement(By.css('div[data-block="CustomPatterns.NotificationBadge"] > div > div'))
     const actions = driver.actions({async: true});
@@ -66,7 +71,7 @@ describe('Notification Badge', function() {
 
   it('CheckWideBadge', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=79");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.xpath('//span[contains(text(), "Badge Text Value")]//parent::label//parent::div/span/input')).sendKeys("12")
     await driver.findElement(By.css('div[data-block="CustomPatterns.NotificationBadge"] > div > div'))

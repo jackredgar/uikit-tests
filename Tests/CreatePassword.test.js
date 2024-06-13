@@ -2,16 +2,21 @@
 const { Builder, By, Key, until, ExpectedConditions } = require('selenium-webdriver')
 const assert = require('assert')
 const { NoSuchElementError } = require('selenium-webdriver/lib/error')
+require('dotenv').config()
 
 describe('Create Password', function() {
   this.timeout(30000)
   let driver
   let vars
 
+  let env = process.env.ENVIRONMENT
+  let LSG_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/"
+  let Component_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90"
+
   let savedCookies = null;
 
   async function goToLSG(driver, componentURL) {
-    await driver.get("https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/")
+    await driver.get(LSG_URL)
     driver.manage().window().maximize();
     if (savedCookies != null) {
       for (let i = 0; i < savedCookies.length; i++) {
@@ -44,7 +49,7 @@ describe('Create Password', function() {
 
   it('TypeUppercase', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("E")
@@ -54,7 +59,7 @@ describe('Create Password', function() {
 
   it('TypeLowercase', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("e")
@@ -64,7 +69,7 @@ describe('Create Password', function() {
 
   it('TypeNumber', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("3")
@@ -74,7 +79,7 @@ describe('Create Password', function() {
 
   it('TypeSymbol', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("!")
@@ -84,7 +89,7 @@ describe('Create Password', function() {
 
   it('TypeMinChars', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("atleasteight")
@@ -94,7 +99,7 @@ describe('Create Password', function() {
 
   it('TypeAll', async function() {
     await driver.manage().setTimeouts({ implicit: 5000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=90");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).click()
     await driver.findElement(By.css("div[data-block='CustomPatterns.PasswordCreate'] input")).sendKeys("Bank1234#")

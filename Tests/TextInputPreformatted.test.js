@@ -2,16 +2,21 @@
 const { Builder, By, Key, until, ExpectedConditions } = require('selenium-webdriver')
 const assert = require('assert')
 const { NoSuchElementError } = require('selenium-webdriver/lib/error')
+require('dotenv').config()
 
 describe('Text Input Preformatted', function() {
   this.timeout(30000)
   let driver
   let vars
 
+  let env = process.env.ENVIRONMENT
+  let LSG_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/"
+  let Component_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=7&MenuSubCategorId=29" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=7&MenuSubCategorId=29"
+
   let savedCookies = null;
 
   async function goToLSG(driver, componentURL) {
-    await driver.get("https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/")
+    await driver.get(LSG_URL)
     driver.manage().window().maximize();
     if (savedCookies != null) {
       for (let i = 0; i < savedCookies.length; i++) {
@@ -44,7 +49,7 @@ describe('Text Input Preformatted', function() {
 
   it('CheckPrefixSuffix', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=7&MenuSubCategorId=29");
+    await goToLSG(driver, Component_URL);
 
     const prefixText = await driver.findElement(By.css("span.preformatted-input-prefix")).getText()
     assert.equal(prefixText, "https//:")
@@ -55,7 +60,7 @@ describe('Text Input Preformatted', function() {
 
   it('TypeText', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=7&MenuSubCategorId=29");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.css(".preformatted-text input")).sendKeys(Key.CONTROL, "a")
     await driver.findElement(By.css(".preformatted-text input")).sendKeys(Key.DELETE)
@@ -67,7 +72,7 @@ describe('Text Input Preformatted', function() {
 
   it('CheckErrorText', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=7&MenuSubCategorId=29");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.xpath("//*[contains(text(), 'Validation')]/parent::div/span/input[contains(@class, 'switch')]")).click()
     await driver.findElement(By.xpath("//*[contains(text(), 'Generic error message')]"))

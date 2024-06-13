@@ -2,16 +2,21 @@
 const { Builder, By, Key, until, ExpectedConditions } = require('selenium-webdriver')
 const assert = require('assert')
 const { NoSuchElementError } = require('selenium-webdriver/lib/error')
+require('dotenv').config()
 
 describe('Pagination', function() {
   this.timeout(30000)
   let driver
   let vars
 
+  let env = process.env.ENVIRONMENT
+  let LSG_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/"
+  let Component_URL = env == "QA" ? "https://axosbank-qa-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117" : "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117"
+
   let savedCookies = null;
 
   async function goToLSG(driver, componentURL) {
-    await driver.get("https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/")
+    await driver.get(LSG_URL)
     driver.manage().window().maximize();
     if (savedCookies != null) {
       for (let i = 0; i < savedCookies.length; i++) {
@@ -44,7 +49,7 @@ describe('Pagination', function() {
 
   it('ClickPage', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.xpath("//*[contains(text(), '4') and contains(@class, 'page-number')]")).click()
     await driver.findElement(By.xpath("//*[contains(text(), 'Current Page: 4')]"))
@@ -52,7 +57,7 @@ describe('Pagination', function() {
 
   it('ClickMiddlePage', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.xpath("//*[contains(text(), '8') and contains(@class, 'page-number')]")).click()
     const paginationChildren = await driver.findElements(By.css(".pagination-list > a"))
@@ -68,7 +73,7 @@ describe('Pagination', function() {
 
   it('ClickLastPage', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117");
+    await goToLSG(driver, Component_URL);
 
     await driver.findElement(By.xpath("//*[contains(text(), '15') and contains(@class, 'page-number')]")).click()
     const paginationChildren = await driver.findElements(By.css(".pagination-list > a"))
@@ -91,7 +96,7 @@ describe('Pagination', function() {
 
   it('CheckFirstPage', async function() {
     await driver.manage().setTimeouts({ implicit: 2000 });
-    await goToLSG(driver, "https://axosbank-dev-sentry.outsystemsenterprise.com/AXOS_Reactive_LSG/PatternDetail?MenuCategoryId=8&MenuSubCategorId=117");
+    await goToLSG(driver, Component_URL);
 
     const paginationChildren = await driver.findElements(By.css(".pagination-list > a"))
     let truncationCount = 0;
