@@ -6,6 +6,7 @@
 
 * Use `npm run test` to run all tests
 * Use `npx mocha "Tests/testname.js"` to run an individual test
+* Use `node GetMissingTests.js` to check for missing component tests
 
 ## Environment Variables
 * Use the `.env` file to change which environment the tests run on (DEV or QA)
