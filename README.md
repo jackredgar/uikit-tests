@@ -10,4 +10,4 @@
 
 ## Environment Variables
 * Use the `.env` file to change which environment the tests run on (DEV or QA)
-* Must setup the DEV and QA URL for the component in each test file
+* Must set the DEV and QA URL of the component in each test file
