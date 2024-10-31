@@ -71,11 +71,12 @@ async function getMissingByAccordion(driver, files, accordionLabel,) {
             continue;
         }
     }
-    // console.log(map)
-    const doneComponents = Object.keys(map).filter(k => map[k])
+    
+    const missingComponents = Object.keys(map).filter(k => !map[k])
     console.log(`Components Section: ${accordionLabel}`)
+    console.log(map)
     console.log(`Total Amount: ${Object.keys(map).length}`)
-    console.log(`Done: ${Object.keys(doneComponents).length}`)
+    console.log(`Missing: ${Object.keys(missingComponents).length}`)
     console.log(`-------------------------------`)
 
     return map
