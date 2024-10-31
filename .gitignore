@@ -1,4 +1,4 @@
 node_modules
 .vscode
-chromedriver.exe
 .env
+package-lock.json
