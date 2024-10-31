@@ -3,7 +3,6 @@ name: Check Missing Tests
 on: 
   schedule:
     - cron:  '0 5 * * *'
-  push:
 
 jobs:
   build:
