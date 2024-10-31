@@ -1,10 +1,15 @@
 import { Builder, By } from 'selenium-webdriver'
+import {Options} from "selenium-webdriver/chrome.js";
 import { goToLSG } from './utilities.js'
 import 'dotenv/config'
 import * as fs from 'fs'
 
 async function getMissingTests() {
-    let driver = await new Builder().forBrowser('chrome').build();
+    let options = new Options()
+    let driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options.addArguments('--headless=new'))
+        .build();
     await driver.manage().setTimeouts({ script: 60000, implicit: 15000 });
 
     let env = process.env.ENVIRONMENT;
